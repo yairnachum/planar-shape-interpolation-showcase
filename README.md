@@ -2,7 +2,7 @@
 
 A research-oriented Autodesk Maya C++ deformer for smooth planar shape deformation and interpolation using conformal and harmonic mapping techniques.
 
-> **Public showcase:** The full implementation remains private because this project is part of ongoing academic work. This repository presents the engineering scope, architecture, and selected results without publishing the complete research code.
+> **Public showcase:** The full implementation remains private because this project is part of ongoing academic work. This repository presents the engineering scope, architecture, selected sanitized C++ extracts, and performance notes without publishing the complete research code.
 
 ## Project overview
 
@@ -38,6 +38,16 @@ flowchart LR
     B --> J[Eigen / MKL]
     B --> K[OpenMP]
 ```
+
+## Selected public engineering samples
+
+The research core is intentionally private, but these sanitized samples show the surrounding systems work:
+
+- [`examples/cpp/matlab_matrix_bridge.cpp`](examples/cpp/matlab_matrix_bridge.cpp) - dense real/complex matrix transfer across the MATLAB Engine boundary, including layout conversion and synchronization
+- [`examples/cpp/maya_deformer_node_skeleton.cpp`](examples/cpp/maya_deformer_node_skeleton.cpp) - Maya deformer-node structure and keyable mode/interpolation attributes with research-specific implementation removed
+- [`examples/performance/performance-engineering-notes.md`](examples/performance/performance-engineering-notes.md) - concrete bottlenecks and optimizations involving Eigen/MKL kernels, caching, OpenMP, MATLAB IPC, and factorization reuse
+
+These files are representative engineering extracts rather than a runnable copy of the private research implementation.
 
 ## What I implemented
 
@@ -102,7 +112,7 @@ Shapes containing holes introduce additional consistency constraints during inte
 
 ## Repository scope
 
-The public showcase intentionally contains only selected documentation, diagrams, and visual results. The full C++ / MATLAB research implementation is not published here.
+The public showcase contains selected engineering extracts and documentation, but intentionally omits the complete C++ / MATLAB research implementation, solver internals, unpublished algorithm code, private Maya scenes, and research assets.
 
 ## Author
 
