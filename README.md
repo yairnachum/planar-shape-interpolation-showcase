@@ -2,13 +2,13 @@
 
 A research-oriented Autodesk Maya C++ deformer for smooth planar shape deformation and interpolation using conformal and harmonic mapping techniques.
 
-> **Public showcase:** The full implementation remains private because this project is part of ongoing academic work. This repository presents the engineering scope, architecture, selected sanitized C++ extracts, and performance notes without publishing the complete research code.
+> **Public showcase:** The full implementation remains private because part of this project extends the published simply-connected method to multiply-connected domains with holes. This repository therefore exposes representative code from the published / simply-connected pipeline, while keeping the new hole-period correction and related research implementation private.
 
 ## Project overview
 
-The project explores how to interpolate and deform 2D shapes, including multiply connected domains with holes, while controlling geometric distortion and preserving stable behavior throughout an animation.
+The project explores how to interpolate and deform 2D shapes while controlling geometric distortion and preserving stable behavior throughout an animation.
 
-I implemented the system as a custom Autodesk Maya deformer node in C++, with numerical kernels split between native C++ and MATLAB-based solver components.
+The baseline simply-connected formulation follows previously published work in planar harmonic / conformal shape interpolation. My implementation integrates that mathematical pipeline into a custom Autodesk Maya deformer and extends it with engineering work around C++/MATLAB integration, numerical optimization, diagnostics, and interactive performance. The ongoing research component focuses on multiply-connected domains with holes.
 
 ## Tech stack
 
@@ -39,15 +39,18 @@ flowchart LR
     B --> K[OpenMP]
 ```
 
-## Selected public engineering samples
+## Public code samples
 
-The research core is intentionally private, but these sanitized samples show the surrounding systems work:
+The public repository now contains representative implementation code from the simply-connected pipeline, not only documentation.
 
+- [`examples/numerics/symmetric_dirichlet.cpp`](examples/numerics/symmetric_dirichlet.cpp) - Symmetric Dirichlet energy, handle penalty, complex gradient, Hessian blocks, and real Hessian assembly used by the Newton optimization path
+- [`examples/numerics/cauchy_basis_simply_connected.cpp`](examples/numerics/cauchy_basis_simply_connected.cpp) - Cauchy coordinate and derivative basis evaluation for a single polygonal cage loop
+- [`examples/numerics/reconstruct_from_derivative.cpp`](examples/numerics/reconstruct_from_derivative.cpp) - reconstruction of vertex positions from a complex derivative field by trapezoidal edge integration over a spanning tree
 - [`examples/cpp/matlab_matrix_bridge.cpp`](examples/cpp/matlab_matrix_bridge.cpp) - dense real/complex matrix transfer across the MATLAB Engine boundary, including layout conversion and synchronization
 - [`examples/cpp/maya_deformer_node_skeleton.cpp`](examples/cpp/maya_deformer_node_skeleton.cpp) - Maya deformer-node structure and keyable mode/interpolation attributes with research-specific implementation removed
 - [`examples/performance/performance-engineering-notes.md`](examples/performance/performance-engineering-notes.md) - concrete bottlenecks and optimizations involving Eigen/MKL kernels, caching, OpenMP, MATLAB IPC, and factorization reuse
 
-These files are representative engineering extracts rather than a runnable copy of the private research implementation.
+The numerical samples deliberately stop at the simply-connected case. Logarithmic hole bases, period-closing correction, and the multiply-connected solver are not published here.
 
 ## What I implemented
 
@@ -55,11 +58,11 @@ These files are representative engineering extracts rather than a runnable copy 
 - Cauchy-coordinate based deformation infrastructure
 - Conformal and harmonic deformation modes
 - Interpolation between endpoint maps
-- Support for planar domains containing holes
-- Period-closing correction for multiply connected interpolation
 - Numerical reconstruction of maps from complex differential data
+- Symmetric Dirichlet energy, gradient, Hessian, and Newton-style optimization infrastructure
 - Injectivity and distortion checks used during optimization
 - Debugging and diagnostic tools for complex fields and numerical behavior
+- Extension to planar domains containing holes, including period-closing correction - kept private in this showcase
 
 ## Performance engineering
 
@@ -98,7 +101,7 @@ Operations that are acceptable during an offline numerical experiment can be too
 
 ### Multiply connected domains
 
-Shapes containing holes introduce additional consistency constraints during interpolation. The project includes a period-closing stage so reconstructed differential fields remain globally consistent around hole loops.
+Shapes containing holes introduce additional consistency constraints during interpolation. That extension is the research-specific part of the project, and its period-closing implementation is intentionally not published in this repository.
 
 ## Results / demo
 
@@ -112,7 +115,11 @@ Shapes containing holes introduce additional consistency constraints during inte
 
 ## Repository scope
 
-The public showcase contains selected engineering extracts and documentation, but intentionally omits the complete C++ / MATLAB research implementation, solver internals, unpublished algorithm code, private Maya scenes, and research assets.
+This showcase intentionally draws a clear line between two parts of the project:
+
+**Public:** representative C++ from the simply-connected / published pipeline, integration code, plugin architecture, and performance-engineering work.
+
+**Private:** the new multiply-connected extension, logarithmic hole basis handling, period-closing solver, and implementation details specific to interpolation on domains with holes.
 
 ## Author
 
