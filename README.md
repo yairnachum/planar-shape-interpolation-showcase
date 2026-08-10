@@ -105,13 +105,29 @@ Shapes containing holes introduce additional consistency constraints during inte
 
 ## Results / demo
 
-<!-- Add a short GIF or video showing:
-1. source shape,
-2. target shape,
-3. t = 0 -> 1 interpolation,
-4. a holed-domain example,
-5. checkerboard visualization for distortion / injectivity.
--->
+### Shape interpolation
+
+![Planar shape interpolation demo](assets/demos/demo_01.gif)
+
+Smooth interpolation between planar source and target shapes inside the Maya deformer.
+
+### Deformation behavior
+
+![Planar deformation demo](assets/demos/demo_02.gif)
+
+Interactive deformation showing the continuous evolution of the mapped geometry.
+
+### Interpolation example
+
+![Planar interpolation example](assets/demos/demo_03.gif)
+
+A second interpolation example demonstrating the method on a different source / target configuration.
+
+### Additional deformation example
+
+![Additional planar deformation demo](assets/demos/demo_04.gif)
+
+An additional Maya result illustrating the behavior of the implemented interpolation pipeline.
 
 ## Repository scope
 
